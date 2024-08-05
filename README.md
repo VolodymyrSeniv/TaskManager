@@ -1,2 +1,2 @@
 # CoLogixCRM
-Here I am doing my portfolio project that a CRM system for logistics company CoLogix
+Here I am doing my portfolio project that is a CRM system for logistics company CoLogix
