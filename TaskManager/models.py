@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from back_end.settings import AUTH_USER_MODEL
 
 
 class Position(models.Model):
@@ -16,7 +17,6 @@ class Worker(AbstractUser):
         related_name="position_name"
         )
 
-        # Adding unique related_name attributes to avoid conflicts
     groups = models.ManyToManyField(
         Group,
         related_name="taskmanager_workers",  # Unique related_name to avoid clashes
@@ -44,6 +44,22 @@ class TaskType(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+    
+
+class Project(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField()
+
+
+class Team(models.Model):
+    workers = models.ManyToManyField(Worker,
+                                     related_name="workers_name")
+    project = models.ForeignKey(Project,
+                                on_delete=models.CASCADE,
+                                related_name="project_team")
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class Task(models.Model):
@@ -62,11 +78,17 @@ class Task(models.Model):
                                 default="Medium")
     task_type = models.ForeignKey(TaskType,
                                   on_delete=models.CASCADE,
-                                  related_name="tasktype_name")
-    assignees = models.ManyToManyField(Worker, related_name="assignees_name")
+                                  related_name="tasktype_task")
+    project = models.ForeignKey(Project,
+                                on_delete=models.CASCADE,
+                                related_name="project_task",
+                                blank=True,
+                                null=True)
+    assignees = models.ManyToManyField(AUTH_USER_MODEL, related_name="assignees_task")
 
     class Meta:
-        ordering = ['-name']
+        ordering = ["priority"]
 
     def __str__(self):
         return f"{self.name} - {self.priority}. {self.is_completed} : {self.assignees}"
+
