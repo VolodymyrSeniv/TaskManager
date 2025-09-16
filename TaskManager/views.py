@@ -11,7 +11,10 @@ from TaskManager.models import (Project,
                                 TaskType,
                                 Team,
                                 Task)
-from TaskManager.forms import ProjectForm
+from TaskManager.forms import (ProjectForm,
+                               PositionForm,
+                               TeamForm,
+                               TaskForm)
 
 
 def home(request: HttpRequest) -> HttpResponse:
@@ -39,6 +42,7 @@ class ProjectsListView(LoginRequiredMixin, generic.ListView):
 
 
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Project
     form_class = ProjectForm
     success_url = reverse_lazy("TaskManager:projects-list")
     template_name = "TaskManager/project_form.html"
@@ -75,6 +79,26 @@ class PositionDetailView(LoginRequiredMixin, generic.DeleteView):
     template_name = "TaskManager/position_detail.html"
 
 
+class PositionsCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Position
+    form_class = PositionForm
+    success_url = reverse_lazy("TaskManager:positions-list")
+    template_name = "TaskManager/position_form.html"
+
+
+class PositionsUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Position
+    form_class = PositionForm
+    success_url = reverse_lazy("TaskManager:positions-list")
+    template_name = "TaskManager/position_form.html"
+
+
+class PositionsDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Position
+    template_name = "TaskManager/position_confirm_delete.html"
+    success_url = reverse_lazy("TaskManager:positions-list")
+
+
 class TeamsListView(LoginRequiredMixin, generic.ListView):
     model = Team
     template_name = "TaskManager/teams_list.html"
@@ -85,6 +109,26 @@ class TeamsListView(LoginRequiredMixin, generic.ListView):
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
     template_name = "TaskManager/team_detail.html"
+
+
+class TeamCreateView(LoginRequiredMixin, generic.DetailView):
+    model = Team
+    form_class = TeamForm
+    success_url = reverse_lazy("TaskManager:teams-list")
+    template_name = "TaskManager/team_from.html"
+
+
+class TeamUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Team
+    form_class = TeamForm
+    success_url = reverse_lazy("TaskManager:teams-list")
+    template_name = "TaskManager/team_form.html"
+
+
+class TeamDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Team
+    success_url=reverse_lazy("TaskManager:teams-list")
+    template_name = "TaskManager/team_confirm_delete.html"
 
 
 class TasksListView(LoginRequiredMixin, generic.ListView):
@@ -99,6 +143,25 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
     template_name = "TaskManager/task_detail.html"
 
+
+class TaskCreateView(LoginRequiredMixin, generic.DetailView):
+    model = Task
+    form_class = TaskForm
+    success_url = reverse_lazy("TaskManager:teams-list")
+    template_name = "TaskManager/task_form.html"
+
+
+class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Task
+    form_class = TaskForm
+    success_url = reverse_lazy("TaskManager:teams-list")
+    template_name = "TaskManager/task_form.html"
+
+
+class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Task
+    success_url=reverse_lazy("TaskManager:teams-list")
+    template_name = "TaskManager/task_confirm_delete.html"
 
 class TaskTypesListView(LoginRequiredMixin, generic.ListView):
     model = TaskType

@@ -1,35 +1,41 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 {% block content %}
 <div class="row">
     <div class="col-sm-2"></div>
-    <div class="col-sm-8 main-text">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="title-elements">Positions</h1>
-        <a class="btn btn-primary" href="{% url 'TaskManager:position-create' %}">+ Add Classroom</a>
-        </div>
-            {% if positions_list %}
-            <table class="table table-striped">
-                <thead class="table-dark">
-                    <tr class="list-elements">
-                        <th class="head-element">ID</th>
-                        <th class="head-element">Name</th>
-                        <th class="head-element">Number of workers</th>
-                    </tr>
-                </thead>
-                <tbody class="pos-table-body">
-                    {% for position in positions_list %}
+        <div class="col-sm-8 main-text">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="title-elements">Positions</h1>
+                <a class="btn btn-primary" href="{% url 'TaskManager:position-create' %}">+ Create Position</a>
+            </div>
+                {% if positions_list %}
+                <table class="table table-striped">
+                    <thead class="table-dark">
                         <tr class="list-elements">
-                            <td>{{position.id}}</td>
-                            <td>{{position.name}}</td>
-                            <td>NN</td>
+                            <th class="head-element">ID</th>
+                            <th class="head-element">Name</th>
+                            <th class="head-element">Number of workers</th>
+                            <th class="head-element">Update</th>
+                            <th class="head-element">Delete</th> 
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-                <p class="empty-message"> There is no positions in the list</p>
-            {% endif %}
-    </div>
+                    </thead>
+                    <tbody class="pos-table-body">
+                        {% for position in positions_list %}
+                            <tr class="list-elements">
+                                <td>{{position.id}}</td>
+                                <td><a href="{{ position.get_absolute_url }}" class="name">{{ position.name }}</a></td>
+                                <td>NN</td>
+                                <td><a class="btn btn-info" href="{% url 'TaskManager:position-update' pk=position.id %}">Update</a></td>
+                                <td><a class="btn btn-danger" href="{% url 'TaskManager:position-delete' pk=position.id %}" onclick="return confirm('Are you sure?');">Delete</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p class="empty-message"> There is no positions in the list</p>
+                {% endif %}
+             </div>
+        </div>
     <div class="col-sm-2"></div>
 </div>
 {% endblock %}

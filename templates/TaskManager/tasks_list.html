@@ -1,11 +1,49 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_filters %}
 {% block content %}
-    {% if tasks_list %}
-        {% for task in tasks_list %}
-            <li>{{ task.name }} {{task.deadline }}</li>
-        {% endfor %}
-    {% else %}
-        <p> There is no tasks in the list</p>
-    {% endif %}
+<div class="row">
+    <div class="col-sm-2"></div>
+        <div class="col-sm-8 main-text">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="title-elements">Tasks</h1>
+                <a class="btn btn-primary" href="{% url 'TaskManager:task-create' %}">+ Create Task</a>
+            </div>
+                {% if tasks_list %}
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr class="list-elements">
+                            <th class="head-element">ID</th>
+                            <th class="head-element">Name</th>
+                            <th class="head-element">Deadline</th>
+                            <th class="head-element">Priority</th>
+                            <th class="head-element">Type</th>
+                            <th class="head-element">Project</th>
+                            <th class="head-element">Number of workers</th>
+                            <th class="head-element">Update</th> 
+                            <th class="head-element">Delete</th> 
+                        </tr>
+                    </thead>
+                    <tbody class="pos-table-body">
+                        {% for task in tasks_list %}
+                            <tr class="list-elements">
+                                <td>{{task.id}}</td>
+                                <td><a href="{{ task.get_absolute_url }}" class="name">{{ task.name }}</a></td>
+                                <td>{{task.deadline}}</td>
+                                <td>{{task.priority}}</td>
+                                <td>{{task.task_type}}</td>
+                                <td><a href="{{ task.project.get_absolute_url }}" class="name">{{ task.project.name }}</a></td>
+                                <td>NN</td>
+                                <td><a class="btn btn-info" href="{% url 'TaskManager:task-update' pk=task.id %}">Update</a></td>
+                                <td><a class="btn btn-danger" href="{% url 'TaskManager:task-delete' pk=task.id %}" onclick="return confirm('Are you sure?');">Delete</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p class="empty-message"> There is no positions in the list</p>
+                {% endif %}
+             </div>
+        </div>
+    <div class="col-sm-2"></div>
+</div>
 {% endblock %}
