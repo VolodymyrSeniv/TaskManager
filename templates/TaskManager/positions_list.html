@@ -3,10 +3,13 @@
 <div class="row">
     <div class="col-sm-2"></div>
     <div class="col-sm-8 main-text">
+        <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="title-elements">Positions</h1>
+        <a class="btn btn-primary" href="{% url 'TaskManager:position-create' %}">+ Add Classroom</a>
+        </div>
             {% if positions_list %}
-            <table class="pos-table">
-                <thead class="pos-table-head">
+            <table class="table table-striped">
+                <thead class="table-dark">
                     <tr class="list-elements">
                         <th class="head-element">ID</th>
                         <th class="head-element">Name</th>

@@ -6,6 +6,7 @@ from django.urls import reverse
 
 class Position(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    description = models.CharField(max_length=255, default="0")
 
     def __str__(self):
         return f"{self.name}"

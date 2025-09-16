@@ -3,14 +3,15 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from TaskManager.models import Worker, Position, Task
 from django.views import generic
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 from TaskManager.models import (Project,
                                 Position,
                                 Worker,
                                 TaskType,
                                 Team,
-                                Task) 
+                                Task)
+from TaskManager.forms import ProjectForm
 
 
 def home(request: HttpRequest) -> HttpResponse:
@@ -35,6 +36,25 @@ class ProjectsListView(LoginRequiredMixin, generic.ListView):
     template_name = "TaskManager/projects_list.html"
     queryset = Project.objects.all()
     context_object_name = "projects_list"
+
+
+class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
+    form_class = ProjectForm
+    success_url = reverse_lazy("TaskManager:projects-list")
+    template_name = "TaskManager/project_form.html"
+
+
+class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Project
+    form_class = ProjectForm
+    success_url = reverse_lazy("TaskManager:projects-list")
+    template_name = "TaskManager/project_form.html"
+
+
+class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Project
+    template_name = "TaskManager/project_confirm_delete.html"
+    success_url = reverse_lazy("TaskManager:projects-list")
 
 
 class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
