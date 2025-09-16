@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if projects_list %}
+        {% for project in projects_list %}
+            <li>{{ project.name }}</li>
+        {% endfor %}
+    {% else %}
+        <p> There is no projects in the list</p>
+    {% endif %}
+{% endblock %}

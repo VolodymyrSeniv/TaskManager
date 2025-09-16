@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8 main-text">
+        <h1 class="title-elements">Positions</h1>
+            {% if positions_list %}
+            <table class="pos-table">
+                <thead class="pos-table-head">
+                    <tr class="list-elements">
+                        <th class="head-element">ID</th>
+                        <th class="head-element">Name</th>
+                        <th class="head-element">Number of workers</th>
+                    </tr>
+                </thead>
+                <tbody class="pos-table-body">
+                    {% for position in positions_list %}
+                        <tr class="list-elements">
+                            <td>{{position.id}}</td>
+                            <td>{{position.name}}</td>
+                            <td>NN</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p class="empty-message"> There is no positions in the list</p>
+            {% endif %}
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+{% endblock %}

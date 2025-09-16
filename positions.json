@@ -1,0 +1,22 @@
+[
+  { "model": "TaskManager.position", "pk": 1, "fields": { "name": "Software Engineer" } },
+  { "model": "TaskManager.position", "pk": 2, "fields": { "name": "Frontend Developer" } },
+  { "model": "TaskManager.position", "pk": 3, "fields": { "name": "Backend Developer" } },
+  { "model": "TaskManager.position", "pk": 4, "fields": { "name": "Fullstack Developer" } },
+  { "model": "TaskManager.position", "pk": 5, "fields": { "name": "Project Manager" } },
+  { "model": "TaskManager.position", "pk": 6, "fields": { "name": "Product Owner" } },
+  { "model": "TaskManager.position", "pk": 7, "fields": { "name": "Business Analyst" } },
+  { "model": "TaskManager.position", "pk": 8, "fields": { "name": "UI/UX Designer" } },
+  { "model": "TaskManager.position", "pk": 9, "fields": { "name": "QA Engineer" } },
+  { "model": "TaskManager.position", "pk": 10, "fields": { "name": "DevOps Engineer" } },
+  { "model": "TaskManager.position", "pk": 11, "fields": { "name": "Data Scientist" } },
+  { "model": "TaskManager.position", "pk": 12, "fields": { "name": "Data Analyst" } },
+  { "model": "TaskManager.position", "pk": 13, "fields": { "name": "Machine Learning Engineer" } },
+  { "model": "TaskManager.position", "pk": 14, "fields": { "name": "Mobile Developer" } },
+  { "model": "TaskManager.position", "pk": 15, "fields": { "name": "Cloud Architect" } },
+  { "model": "TaskManager.position", "pk": 16, "fields": { "name": "Scrum Master" } },
+  { "model": "TaskManager.position", "pk": 17, "fields": { "name": "Tech Lead" } },
+  { "model": "TaskManager.position", "pk": 18, "fields": { "name": "CTO" } },
+  { "model": "TaskManager.position", "pk": 19, "fields": { "name": "HR Specialist" } },
+  { "model": "TaskManager.position", "pk": 20, "fields": { "name": "Intern" } }
+]

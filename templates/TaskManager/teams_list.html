@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if teams_list %}
+        {% for team in teams_list %}
+            <li>{{ team.team_code }} {{team.project }}</li>
+        {% endfor %}
+    {% else %}
+        <p> There is no teams in the list</p>
+    {% endif %}
+{% endblock %}

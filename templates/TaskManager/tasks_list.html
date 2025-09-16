@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if tasks_list %}
+        {% for task in tasks_list %}
+            <li>{{ task.name }} {{task.deadline }}</li>
+        {% endfor %}
+    {% else %}
+        <p> There is no tasks in the list</p>
+    {% endif %}
+{% endblock %}

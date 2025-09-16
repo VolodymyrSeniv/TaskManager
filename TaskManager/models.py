@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from back_end.settings import AUTH_USER_MODEL
+from django.urls import reverse
 
 
 class Position(models.Model):
@@ -8,32 +9,23 @@ class Position(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+    
+    def get_absolute_url(self):
+        return reverse("TaskManager:position-detail", args=[str(self.id)])
 
 
 class Worker(AbstractUser):
     position = models.ForeignKey(
         Position,
         on_delete=models.CASCADE,
-        related_name="position_name"
+        related_name="position_name",
+        null=True,
+        blank=True,
         )
 
-    groups = models.ManyToManyField(
-        Group,
-        related_name="taskmanager_workers",  # Unique related_name to avoid clashes
-        blank=True,
-        help_text="The groups this user belongs to.",
-        related_query_name="worker",
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        related_name="taskmanager_worker_permissions",  # Unique related_name to avoid clashes
-        blank=True,
-        help_text="Specific permissions for this user.",
-        related_query_name="worker",
-    )
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.position}"
+        return f"{self.first_name} {self.last_name}"
 
 
 class TaskType(models.Model):
@@ -44,14 +36,26 @@ class TaskType(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    def get_absolute_url(self):
+        return reverse("TaskManager:tasktype-detail", args=[str(self.id)])
+
     
 
 class Project(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
 
+    def __str__(self):
+        return f"{self.name}"
+
+    def get_absolute_url(self):
+        return reverse("TaskManager:project-detail", args=[str(self.id)])
+
+
 
 class Team(models.Model):
+    team_code = models.CharField(max_length=10, unique=True, null=True, blank=True)
     workers = models.ManyToManyField(Worker,
                                      related_name="workers_name")
     project = models.ForeignKey(Project,
@@ -59,7 +63,11 @@ class Team(models.Model):
                                 related_name="project_team")
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.team_code} - {self.project.name}"
+
+    def get_absolute_url(self):
+        return reverse("TaskManager:team-detail", args=[str(self.id)])
+
 
 
 class Task(models.Model):
@@ -86,9 +94,14 @@ class Task(models.Model):
                                 null=True)
     assignees = models.ManyToManyField(AUTH_USER_MODEL, related_name="assignees_task")
 
+
     class Meta:
         ordering = ["priority"]
 
+
     def __str__(self):
         return f"{self.name} - {self.priority}. {self.is_completed} : {self.assignees}"
+    
+    def get_absolute_url(self):
+        return reverse("TaskManager:task-detail", args=[str(self.id)])
 
