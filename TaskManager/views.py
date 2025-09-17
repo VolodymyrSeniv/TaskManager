@@ -137,6 +137,7 @@ class TasksListView(LoginRequiredMixin, generic.ListView):
     queryset = Task.objects.all().select_related("task_type",
                                                  "project").prefetch_related("assignees")
     context_object_name = "tasks_list"
+    paginate_by = 8
 
 
 class TaskDetailView(LoginRequiredMixin, generic.DetailView):
@@ -147,20 +148,20 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
 class TaskCreateView(LoginRequiredMixin, generic.DetailView):
     model = Task
     form_class = TaskForm
-    success_url = reverse_lazy("TaskManager:teams-list")
+    success_url = reverse_lazy("TaskManager:tasks-list")
     template_name = "TaskManager/task_form.html"
 
 
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskForm
-    success_url = reverse_lazy("TaskManager:teams-list")
+    success_url = reverse_lazy("TaskManager:tasks-list")
     template_name = "TaskManager/task_form.html"
 
 
 class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
-    success_url=reverse_lazy("TaskManager:teams-list")
+    success_url=reverse_lazy("TaskManager:tasks-list")
     template_name = "TaskManager/task_confirm_delete.html"
 
 class TaskTypesListView(LoginRequiredMixin, generic.ListView):
