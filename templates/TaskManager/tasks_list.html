@@ -8,23 +8,35 @@
             <h1 class="title-elements">Tasks</h1>
             <a class="btn btn-primary" href="{% url 'TaskManager:task-create' %}">+ Create Task</a>
         </div>
+        <form method="get" action="" class="d-flex align-items-center mb-3 search">
+                {{ search_form|crispy }}
+                <button class="btn btn-secondary ms-2" type="submit">🔎 Search</button>
+        </form>
         {% if tasks_list %}
         <div class="container mt-4">
             <div class="row">
-                <div class="col-md-6 incompleted-tasks">
+                <div class="col-12 col-sm-6 col-md-6 incompleted-tasks">
                     <h3 class="task-header">Incompleted</h3>
-                    <div class="row">
+                    <div class="row g-3">
                         {% for task in tasks_list %}
                         {% if not task.is_completed %}
                         <div class="col-md-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
                                     <h6 class="card-text id">ID: {{ task.id }}</h6>
+                                    {% load tz %}
+                                    {% now "Y-m-d H:i" as current_time %}
+                                    <h6 class="card-text id {% if task.deadline|stringformat:"Y-m-d H:i" < current_time %}deadline-passed{% endif %}">
+                                        Deadline: {{ task.deadline }}
+                                    </h6>
+                                    <h6 class="card-text id">
+                                        Priority: {{task.priority}}
+                                    </h6>
                                     <h6 class="card-text"><a href="{{ task.get_absolute_url }}" class="name">Name: 
                                         {{task.name }}</a></h6>
                                     <h6 class="card-text"><a href="{{ task.project.get_absolute_url }}"
                                             class="name">Project: {{ task.project.name }}</a></h6>
-                                    <div class="d-flex gap-2 mt-3">
+                                    <div class="d-flex flex-wrap gap-2 mt-3">
                                         <a class="btn btn-info btn-sm"
                                             href="{% url 'TaskManager:task-update' pk=task.id %}">Update</a>
                                         <a class="btn btn-danger btn-sm"
@@ -39,15 +51,19 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="col-md-6 completed-tasks">
+                <div class="col-12 col-sm-6 col-md-6 completed-tasks">
                     <h3>Completed</h3>
-                    <div class="row">
+                    <div class="row g-3">
                         {% for task in tasks_list %}
                         {% if task.is_completed %}
                         <div class="col-md-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
                                     <h6 class="card-text id">ID: {{ task.id }}</h6>
+                                    <h6 class="card-text id">Deadline: {{task.deadline}} </h6>
+                                    <h6 class="card-text id">
+                                        Priority: {{task.priority}}
+                                    </h6>
                                     <h6 class="card-text">
                                         <a href="{{ task.get_absolute_url }}" class="name">
                                             Name: {{ task.name }}
@@ -58,7 +74,7 @@
                                             Project: {{ task.project.name }}
                                         </a>
                                     </h6>
-                                    <div class="d-flex gap-2 mt-2">
+                                    <div class="d-flex flex-wrap gap-2 mt-3">
                                         <a class="btn btn-info btn-sm"
                                             href="{% url 'TaskManager:task-update' pk=task.id %}">Update</a>
                                         <a class="btn btn-danger btn-sm"

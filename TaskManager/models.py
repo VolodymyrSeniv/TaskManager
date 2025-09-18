@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from back_end.settings import AUTH_USER_MODEL
 from django.urls import reverse
+from django.core.validators import MinValueValidator
+from django.utils import timezone
 
 
 class Position(models.Model):
@@ -27,6 +29,9 @@ class Worker(AbstractUser):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+    def get_absolute_url(self):
+        return reverse("TaskManager:worker-detail", args=[str(self.id)])
 
 
 class TaskType(models.Model):
@@ -41,33 +46,31 @@ class TaskType(models.Model):
     def get_absolute_url(self):
         return reverse("TaskManager:tasktype-detail", args=[str(self.id)])
 
-    
+
+
+class Team(models.Model):
+    team_code = models.CharField(max_length=6, unique=True, null=True, blank=True)
+    workers = models.ManyToManyField(Worker,
+                                     related_name="workers_name")
+
+    def __str__(self):
+        return f"{self.team_code}"
+
+    def get_absolute_url(self):
+        return reverse("TaskManager:team-detail", args=[str(self.id)])
+
 
 class Project(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
+    teams = models.ManyToManyField(Team,
+                                related_name="project_team")
 
     def __str__(self):
         return f"{self.name}"
 
     def get_absolute_url(self):
         return reverse("TaskManager:project-detail", args=[str(self.id)])
-
-
-
-class Team(models.Model):
-    team_code = models.CharField(max_length=10, unique=True, null=True, blank=True)
-    workers = models.ManyToManyField(Worker,
-                                     related_name="workers_name")
-    project = models.ForeignKey(Project,
-                                on_delete=models.CASCADE,
-                                related_name="project_team")
-
-    def __str__(self):
-        return f"{self.team_code} - {self.project.name}"
-
-    def get_absolute_url(self):
-        return reverse("TaskManager:team-detail", args=[str(self.id)])
 
 
 
@@ -80,7 +83,8 @@ class Task(models.Model):
     ]
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
-    deadline = models.DateTimeField()
+    deadline = models.DateTimeField(validators=[MinValueValidator(timezone.now(),
+                                                                  message="The deadline must be in the future!")],)
     is_completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=10,
                                 choices=PRIORITY_CHOICES,
@@ -97,7 +101,7 @@ class Task(models.Model):
 
 
     class Meta:
-        ordering = ["priority"]
+        ordering = ["-priority"]
 
 
     def __str__(self):

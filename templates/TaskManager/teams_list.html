@@ -8,29 +8,31 @@
                 <h1 class="title-elements">Teams</h1>
                 <a class="btn btn-primary" href="{% url 'TaskManager:team-create' %}">+ Create Team</a>
             </div>
+            <form method="get" action="" class="d-flex align-items-center mb-3 search">
+                {{ search_form|crispy }}
+                <button class="btn btn-secondary ms-2" type="submit">🔎 Search</button>
+            </form>
                 {% if teams_list %}
-                <table class="table table-striped">
-                    <thead class="table-dark">
-                        <tr class="list-elements">
-                            <th class="head-element">Team Code</th>
-                            <th class="head-element">Number of members</th>
-                            <th class="head-element">Project</th>
-                            <th class="head-element">Update</th>
-                            <th class="head-element">Delete</th> 
-                        </tr>
-                    </thead>
-                    <tbody class="pos-table-body">
-                        {% for team in teams_list %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle">
+                        <thead class="table-dark">
                             <tr class="list-elements">
-                                <td><a href="{{ team.get_absolute_url }}" class="name">{{ team.team_code }}</a></td>
-                                <td>NN</td>
-                                <td><a href="{{ team.project.get_absolute_url }}" class="name">{{team.project.name}}</a></td>
-                                <td><a class="btn btn-info" href="{% url 'TaskManager:team-update' pk=team.id %}">Update</a></td>
-                                <td><a class="btn btn-danger" href="{% url 'TaskManager:team-delete' pk=team.id %}" onclick="return confirm('Are you sure?');">Delete</a></td>
+                                <th class="head-element">Team Code</th>
+                                <th class="head-element">Update</th>
+                                <th class="head-element">Delete</th> 
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="pos-table-body">
+                            {% for team in teams_list %}
+                                <tr class="list-elements">
+                                    <td><a href="{{ team.get_absolute_url }}" class="name">{{ team.team_code }}</a></td>
+                                    <td><a class="btn btn-info" href="{% url 'TaskManager:team-update' pk=team.id %}">Update</a></td>
+                                    <td><a class="btn btn-danger" href="{% url 'TaskManager:team-delete' pk=team.id %}" onclick="return confirm('Are you sure?');">Delete</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 {% else %}
                     <p class="empty-message"> There is no teams in the list</p>
                 {% endif %}

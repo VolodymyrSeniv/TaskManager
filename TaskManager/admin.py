@@ -37,9 +37,8 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ["team_code", "project", ]
+    list_display = ["team_code", ]
     search_fields = ["team_code",]
-    list_filter = ["project", ]
 
 
 @admin.register(Task)

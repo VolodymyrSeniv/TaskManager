@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="card-title">{{ project.name }}</h1>
+                    <h2><small class="text-muted">{{ project.description}}</small></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h3>Teams Assigned to This Project</h3>
+        {% if project.teams.all %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>Team Code</th>
+                        <th>Number of Members</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for team in project.teams.all %}
+                    <tr class="text-center">
+                        <td><a href="{{ team.get_absolute_url }}" class="name">{{ team.team_code }}</a></td>
+                        <td>{{ team.members.count }}</td> 
+                        <td>
+                            <a href="{% url 'TaskManager:team-update' pk=team.id %}" class="btn btn-sm btn-info">Update</a>
+                            <a href="{% url 'TaskManager:team-delete' pk=team.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-muted">There are no teams on this project.</p>
+        {% endif %}
+
+</div>
+
+{% endblock %}
