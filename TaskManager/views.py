@@ -1,5 +1,5 @@
 import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from TaskManager.models import Worker, Position, Task
 from django.views import generic
@@ -241,6 +241,15 @@ class TasksListView(LoginRequiredMixin, generic.ListView):
         if form.is_valid():
             return queryset.filter(name__icontains=form.cleaned_data["name"])
         return queryset
+
+    def post(self, request, *args, **kwargs):
+        task_id = request.POST.get("task_id")
+        if task_id:
+            task = Task.objects.filter(pk=task_id).first()
+            if task:
+                task.is_completed = True
+                task.save()
+        return redirect(request.path)
 
 
 class TaskDetailView(LoginRequiredMixin, generic.DetailView):

@@ -26,8 +26,11 @@
                                     <h6 class="card-text id">ID: {{ task.id }}</h6>
                                     {% load tz %}
                                     {% now "Y-m-d H:i" as current_time %}
-                                    <h6 class="card-text id {% if task.deadline|stringformat:"Y-m-d H:i" < current_time %}deadline-passed{% endif %}">
-                                        Deadline: {{ task.deadline }}
+                                    <h6 class="card-text id">
+                                        Deadline: 
+                                        <span class="{% if task.deadline_measure %}text-danger{% else %}text-success{% endif %} id">
+                                            {{ task.deadline }}
+                                        </span>
                                     </h6>
                                     <h6 class="card-text id">
                                         Priority: {{task.priority}}
@@ -42,7 +45,15 @@
                                         <a class="btn btn-danger btn-sm"
                                             href="{% url 'TaskManager:task-delete' pk=task.id %}"
                                             onclick="return confirm('Are you sure?');">Delete</a>
-                                        <a class="btn btn-success btn-sm" href="">Complete</a>
+                                         <form method="post" style="display:inline;">
+                                            {% csrf_token %}
+                                            {% if not task.is_completed %}
+                                                <input type="hidden" name="task_id" value="{{ task.id }}">
+                                                <button type="submit" name="complete" class="btn btn-success btn-sm">Complete</button>
+                                            {% else %}
+                                                <span class="badge bg-secondary">Completed</span>
+                                            {% endif %}
+                                        </form>
                                     </div>
                                 </div>
                             </div>
