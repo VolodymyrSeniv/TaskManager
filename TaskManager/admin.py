@@ -5,7 +5,8 @@ from TaskManager.models import (Position,
                                 TaskType,
                                 Project,
                                 Team,
-                                Task)
+                                Task,
+                                Tag)
 
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
@@ -39,6 +40,12 @@ class ProjectAdmin(admin.ModelAdmin):
 class TeamAdmin(admin.ModelAdmin):
     list_display = ["team_code", ]
     search_fields = ["team_code",]
+
+
+@admin.register(Tag)
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ["name", ]
+    search_fields = ["name",]
 
 
 @admin.register(Task)
