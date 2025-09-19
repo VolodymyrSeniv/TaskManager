@@ -153,3 +153,21 @@ class TaskSearchForm(Form):
                                 }
                             )
                         )
+
+
+class TaskTypeForm(ModelForm):
+    class Meta:
+        model = TaskType
+        fields = "__all__"
+
+
+class TaskTypeSearchForm(Form):
+    name = CharField(max_length=255,
+                            required=False,
+                            label="",
+                            widget=TextInput(
+                                attrs={
+                                    "placeholder": "search by name"
+                                }
+                            )
+                        )

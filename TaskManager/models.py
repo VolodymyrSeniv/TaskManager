@@ -6,6 +6,7 @@ from django.core.validators import MinValueValidator
 from django.utils import timezone
 
 
+
 class Position(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.CharField(max_length=255, default="0")
@@ -103,6 +104,11 @@ class Task(models.Model):
     class Meta:
         ordering = ["-priority"]
 
+    @property
+    def deadline_measure(self):
+        if self.deadline:
+            return self.deadline < timezone.now()
+        return False
 
     def __str__(self):
         return f"{self.name} - {self.priority}. {self.is_completed} : {self.assignees}"

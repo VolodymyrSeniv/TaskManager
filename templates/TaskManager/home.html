@@ -1,17 +1,47 @@
 {% extends "base.html" %}
+
 {% block title %}
     <title>Home</title>
-{% endblock%}
+{% endblock %}
+
 {% block content %}
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-text">{{ current_time }}</h6>
-                <h6 class="card-text">{{ workers }}</h6>
-                <h6 class="card-text">{{ positions }}</h6>
-                <h6 class="card-text">{{ tasks }}</h6>
-                <h6 class="card-text">You have visited this page {{times_visited}}</h6>
+<div class="container mt-5">
+    <!-- Welcome Card -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="card-title mb-3">Welcome, {{ first_name }} {{ last_name }}!</h2>
+            <p class="text-muted mb-1"><strong>Email:</strong> {{ email }}</p>
+            <p class="text-muted mb-3"><strong>Position:</strong> {{ position }}</p>
+
+            <div class="row text-center">
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-light shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-subtitle text-muted mb-2">Today's Date</h6>
+                            <p class="card-text fs-5">{{ current_day }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-light shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-subtitle text-muted mb-2">Current Time</h6>
+                            <p class="card-text fs-5">{{ current_time }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-light shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-subtitle text-muted mb-2">Tasks to Do</h6>
+                            <p class="card-text fs-5">{{ tasks }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <p class="text-muted mt-3"><strong>Page visits:</strong> {{ times_visited }}</p>
         </div>
     </div>
+</div>
 {% endblock %}

@@ -20,21 +20,23 @@ from TaskManager.forms import (ProjectForm,
                                TaskForm,
                                TaskSearchForm,
                                WorkerCreationForm,
-                               WorkerSearchForm)
+                               WorkerSearchForm,
+                               TaskTypeForm,
+                               TaskTypeSearchForm)
 from django.contrib.auth import get_user_model
 
 def home(request: HttpRequest) -> HttpResponse:
-    current_time = datetime.datetime.now()
-    workers = Worker.objects.count()
-    positions = Position.objects.count()
-    tasks = Task.objects.count()
     num_visits = request.session.get("num_visits", 0) + 1
     request.session["num_visits"] = num_visits
     context = {
-        "current_time" : current_time,
-        "workers" : workers,
-        "positions" : positions,
-        "tasks" : tasks,
+        "current_day" : datetime.datetime.now().date,
+        "current_time" : datetime.datetime.now().time,
+        "first_name" : request.user.first_name,
+        "last_name" : request.user.last_name,
+        "email" : request.user.email,
+        "position" : request.user.position.name,
+        "tasks" : Task.objects.filter(assignees=request.user,
+                                      is_completed=False).count(),
         "times_visited": num_visits
     }
     return render(request, 'TaskManager/home.html', context=context)
@@ -44,6 +46,7 @@ class WorkersListView(LoginRequiredMixin, generic.ListView):
     model = get_user_model()
     template_name = "TaskManager/workers_list.html"
     context_object_name = "workers_list"
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(WorkersListView, self).get_context_data(**kwargs)
@@ -88,6 +91,7 @@ class ProjectsListView(LoginRequiredMixin, generic.ListView):
     model = Project
     template_name = "TaskManager/projects_list.html"
     context_object_name = "projects_list"
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(ProjectsListView, self).get_context_data(**kwargs)
@@ -177,6 +181,7 @@ class TeamsListView(LoginRequiredMixin, generic.ListView):
     model = Team
     template_name = "TaskManager/teams_list.html"
     context_object_name = "teams_list"
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(TeamsListView, self).get_context_data(**kwargs)
@@ -268,8 +273,41 @@ class TaskTypesListView(LoginRequiredMixin, generic.ListView):
     template_name = "TaskManager/tasktypes_list.html"
     queryset = TaskType.objects.all()
     context_object_name = "tasktypes_list"
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(TaskTypesListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TaskTypeSearchForm(initial={"name": name})
+        return context
+    
+    def get_queryset(self):
+        form = TaskTypeSearchForm(self.request.GET)
+        if form.is_valid():
+            return self.queryset.filter(name__icontains=form.cleaned_data["name"])
+        return self.queryset
 
 
 class TaskTypeDetailView(LoginRequiredMixin, generic.DetailView):
     model = TaskType
     template_name = "TaskManager/tasktype_detail.html"
+
+
+class TaskTypeCreateView(LoginRequiredMixin, generic.CreateView):
+    model = TaskType
+    form_class = TaskTypeForm
+    success_url = reverse_lazy("TaskManager:tasktypes-list")
+    template_name = "TaskManager/tasktype_form.html"
+
+
+class TaskTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = TaskType
+    form_class = TaskTypeForm
+    success_url = reverse_lazy("TaskManager:tasktypes-list")
+    template_name = "TaskManager/tasktype_form.html"
+
+
+class TaskTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = TaskType
+    success_url=reverse_lazy("TaskManager:tasktypes-list")
+    template_name = "TaskManager/tasktype_confirm_delete.html"
