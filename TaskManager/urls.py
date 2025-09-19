@@ -30,6 +30,10 @@ from TaskManager.views import (ProjectsListView,
                                WorkerCreateView,
                                WorkerUpdateView,
                                WorkerDeleteView,
+                               TagsListView,
+                               TagCreateView,
+                               TagUpdateView,
+                               TagDeleteView
                                )
 
 urlpatterns = [
@@ -64,6 +68,10 @@ urlpatterns = [
     path("workers/create/", WorkerCreateView.as_view(), name="worker-create"),
     path("worker/<int:pk>/update/", WorkerUpdateView.as_view(), name="worker-update"),
     path("worker/<int:pk>/delete/", WorkerDeleteView.as_view(), name="worker-delete"),
+    path("tags/", TagsListView.as_view(), name="tags-list"),
+    path("tag/create/", TagCreateView.as_view(), name="tag-create"),
+    path("tag/<int:pk>/update/", TagUpdateView.as_view(), name="tag-update"),
+    path("tag/<int:pk>/delete/", TagDeleteView.as_view(), name="tag-delete")
 ]
 
 

@@ -39,6 +39,13 @@
                                         {{task.name }}</a></h6>
                                     <h6 class="card-text"><a href="{{ task.project.get_absolute_url }}"
                                             class="name">Project: {{ task.project.name }}</a></h6>
+                                    {% if task.tags.exists %}
+                                        <div class="mt-2 d-flex flex-wrap gap-1">
+                                            {% for tag in task.tags.all %}
+                                                <span class="badge bg-primary">{{ tag.name }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
                                     <div class="d-flex flex-wrap gap-2 mt-3">
                                         <a class="btn btn-info btn-sm"
                                             href="{% url 'TaskManager:task-update' pk=task.id %}">Update</a>
@@ -75,6 +82,13 @@
                                     <h6 class="card-text id">
                                         Priority: {{task.priority}}
                                     </h6>
+                                    {% if task.tags.exists %}
+                                        <div class="mt-2 d-flex flex-wrap gap-1">
+                                            {% for tag in task.tags.all %}
+                                                <span class="badge bg-primary">{{ tag.name }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
                                     <h6 class="card-text">
                                         <a href="{{ task.get_absolute_url }}" class="name">
                                             Name: {{ task.name }}
@@ -95,6 +109,7 @@
                                 </div>
                             </div>
                         </div>
+
                         {% endif %}
                         {% endfor %}
                     </div>

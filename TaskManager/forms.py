@@ -11,7 +11,8 @@ from TaskManager.models import (Project,
                                 Position,
                                 Team,
                                 Task,
-                                TaskType)
+                                TaskType,
+                                Tag)
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
@@ -32,6 +33,24 @@ class WorkerSearchForm(Form):
                             widget=TextInput(
                                 attrs={
                                     "placeholder": "search by first name"
+                                }
+                            )
+                        )
+
+
+class TagForm(ModelForm):
+    class Meta:
+        model = Tag
+        fields = ("name",)
+
+
+class TagSearchForm(Form):
+    name = CharField(max_length=255,
+                            required=False,
+                            label="",
+                            widget=TextInput(
+                                attrs={
+                                    "placeholder": "search by name"
                                 }
                             )
                         )
@@ -112,6 +131,7 @@ class TaskForm(ModelForm):
                  "priority",
                  "task_type",
                  "project",
+                 "tags",
                  "assignees")
         widgets = {
             "deadline": DateTimeInput(
@@ -130,6 +150,12 @@ class TaskForm(ModelForm):
         required=True
     )
 
+    tags = ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        widget=CheckboxSelectMultiple,   # Or forms.SelectMultiple
+        required=True
+    )
+
     task_type = ModelChoiceField(
         queryset=TaskType.objects.all(),
         widget=Select(attrs={"class": "form-select"}),
@@ -144,15 +170,14 @@ class TaskForm(ModelForm):
 
 
 class TaskSearchForm(Form):
-    name = CharField(max_length=255,
-                            required=False,
-                            label="",
-                            widget=TextInput(
-                                attrs={
-                                    "placeholder": "search by name"
-                                }
-                            )
-                        )
+    query = CharField(
+                max_length=255,
+                required=False,
+                label="",
+                widget=TextInput(
+                    attrs={"placeholder": "Search by task, project or tags"}
+                )
+        )
 
 
 class TaskTypeForm(ModelForm):

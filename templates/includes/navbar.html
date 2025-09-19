@@ -18,10 +18,11 @@
             <a class="topnav-button home" href="{% url 'task_manager:home' %}">Home</a>
             <a class="topnav-button tasks" href="{% url 'task_manager:tasks-list' %}">Tasks</a>
             <a class="topnav-button projects" href="{% url 'task_manager:projects-list' %}">Projects</a>
-            <a class="topnav-button teams" href="{% url 'task_manager:positions-list' %}">Positions</a>
+            <a class="topnav-button positions" href="{% url 'task_manager:positions-list' %}">Positions</a>
             <a class="topnav-button teams" href="{% url 'task_manager:teams-list' %}">Teams</a>
-            <a class="topnav-button teams" href="{% url 'task_manager:tasktypes-list' %}">Task Types</a>
-            <a class="topnav-button teams" href="{% url 'task_manager:workers-list' %}">Workers</a>
+            <a class="topnav-button tasktypes" href="{% url 'task_manager:tasktypes-list' %}">Task Types</a>
+            <a class="topnav-button workers" href="{% url 'task_manager:workers-list' %}">Workers</a>
+            <a class="topnav-button tags" href="{% url 'task_manager:tags-list' %}">Tags</a>
         </div>
         <div class="menu-right">
             {% if user.is_authenticated %}

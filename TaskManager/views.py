@@ -1,16 +1,15 @@
 import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
-from TaskManager.models import Worker, Position, Task
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from TaskManager.models import (Project,
                                 Position,
-                                Worker,
                                 TaskType,
                                 Team,
-                                Task)
+                                Task,
+                                Tag)
 from TaskManager.forms import (ProjectForm,
                                ProjectSearchForm,
                                PositionForm,
@@ -22,8 +21,12 @@ from TaskManager.forms import (ProjectForm,
                                WorkerCreationForm,
                                WorkerSearchForm,
                                TaskTypeForm,
-                               TaskTypeSearchForm)
+                               TaskTypeSearchForm,
+                               TagForm,
+                               TagSearchForm)
 from django.contrib.auth import get_user_model
+from django.db.models import Q
+
 
 def home(request: HttpRequest) -> HttpResponse:
     num_visits = request.session.get("num_visits", 0) + 1
@@ -229,18 +232,29 @@ class TasksListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 8
 
     def get_context_data(self, **kwargs):
-        context = super(TasksListView, self).get_context_data(**kwargs)
-        name = self.request.GET.get("name", "")
-        context["search_form"] = TaskSearchForm(initial={"name": name})
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get("query", "")
+        context["search_form"] = TaskSearchForm(initial={"query": query})
         return context
-    
+
     def get_queryset(self):
-        queryset = Task.objects.select_related("task_type",
-                                                "project").prefetch_related("assignees").filter(assignees=self.request.user)
+        queryset = Task.objects.select_related(
+            "task_type", "project"
+        ).prefetch_related("assignees", "tags").filter(
+            assignees=self.request.user
+        )
+
         form = TaskSearchForm(self.request.GET)
         if form.is_valid():
-            return queryset.filter(name__icontains=form.cleaned_data["name"])
+            query = form.cleaned_data["query"]
+            if query:
+                queryset = queryset.filter(
+                    Q(name__icontains=query) |
+                    Q(project__name__icontains=query) |
+                    Q(tags__name__icontains=query)
+                ).distinct()
         return queryset
+
 
     def post(self, request, *args, **kwargs):
         task_id = request.POST.get("task_id")
@@ -320,3 +334,44 @@ class TaskTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = TaskType
     success_url=reverse_lazy("TaskManager:tasktypes-list")
     template_name = "TaskManager/tasktype_confirm_delete.html"
+
+
+class TagsListView(LoginRequiredMixin, generic.ListView):
+    model = Tag
+    template_name = "TaskManager/tags_list.html"
+    queryset = Tag.objects.all()
+    context_object_name = "tags_list"
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(TagsListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TagSearchForm(initial={"name": name})
+        return context
+    
+    def get_queryset(self):
+        form = TagSearchForm(self.request.GET)
+        if form.is_valid():
+            return self.queryset.filter(name__icontains=form.cleaned_data["name"])
+        return self.queryset
+
+
+class TagCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Tag
+    form_class = TagForm
+    success_url = reverse_lazy("TaskManager:tags-list")
+    template_name = "TaskManager/tag_form.html"
+
+
+class TagUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Tag
+    form_class = TagForm
+    success_url = reverse_lazy("TaskManager:tags-list")
+    template_name = "TaskManager/tag_form.html"
+
+
+class TagDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Tag
+    success_url=reverse_lazy("TaskManager:tags-list")
+    template_name = "TaskManager/tag_confirm_delete.html"
+

@@ -74,6 +74,12 @@ class Project(models.Model):
         return reverse("TaskManager:project-detail", args=[str(self.id)])
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name}"   
+
 
 class Task(models.Model):
     PRIORITY_CHOICES = [
@@ -99,7 +105,7 @@ class Task(models.Model):
                                 blank=True,
                                 null=True)
     assignees = models.ManyToManyField(AUTH_USER_MODEL, related_name="assignees_task")
-
+    tags = models.ManyToManyField(Tag, related_name="tasks", blank=True)
 
     class Meta:
         ordering = ["-priority"]
