@@ -26,8 +26,10 @@ from TaskManager.forms import (ProjectForm,
                                TagSearchForm)
 from django.contrib.auth import get_user_model
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def home(request: HttpRequest) -> HttpResponse:
     num_visits = request.session.get("num_visits", 0) + 1
     request.session["num_visits"] = num_visits
