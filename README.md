@@ -77,13 +77,81 @@ python manage.py runserver
 <img width="781" height="741" alt="Untitled Diagram drawio" src="https://github.com/user-attachments/assets/f1dc2ee8-0cb6-4e24-9bd5-6eca16d1f7ef" />
 
 ## **Screenshots**
-###Index
+
+- ### Index
 <img width="1919" height="705" alt="image" src="https://github.com/user-attachments/assets/3291af0e-0aab-4843-97b0-354edd975d2d" />
 
-###Login
-<img width="1919" height="780" alt="image" src="https://github.com/user-attachments/assets/c7a2a5fb-1e8d-48c1-9f2f-60c210d707cf" />
+- ### Login
+<img width="1919" height="780" alt="image" src="https://github.com/user-attachments/assets/c7a2a5fb-1e8d-48c1-9f2f-60c210d707cf" /> 
 
-### 
+- ### Tasks List Page
+<img width="1919" height="890" alt="image" src="https://github.com/user-attachments/assets/a87a150d-a083-470c-927f-283ccdba09ff" />
+
+- ### Task Detail Page
+<img width="1919" height="808" alt="image" src="https://github.com/user-attachments/assets/68cdb0c8-fcf1-4add-adab-9548ba262673" />
+
+- ### Projects List Page
+<img width="1919" height="823" alt="image" src="https://github.com/user-attachments/assets/e12a343d-7c23-498c-a9f2-c9aab7e289ec" />
+
+- ### Project Detail Page
+<img width="1919" height="850" alt="image" src="https://github.com/user-attachments/assets/b2635b13-341a-403b-9792-30b65549aaf5" />
+
+- ### Positions List Page
+<img width="1919" height="772" alt="image" src="https://github.com/user-attachments/assets/e6b2dcbd-d0dc-4c68-b244-834c200b3af9" />
+
+- ### Position Detail Page
+<img width="1919" height="780" alt="image" src="https://github.com/user-attachments/assets/7671eb28-f46f-4d5f-b635-aa0fe742a6f0" />
+
+- ### Teams List Page
+<img width="1919" height="714" alt="image" src="https://github.com/user-attachments/assets/831c41b2-2096-4dcb-be2a-d8ade9ee6866" />
+
+- ### Teams Detail Page
+<img width="1919" height="828" alt="image" src="https://github.com/user-attachments/assets/e6937856-8d68-4532-89a6-e64049b4a0f2" />
+
+- ### Tasks Types List Page
+<img width="1919" height="644" alt="image" src="https://github.com/user-attachments/assets/c510bbfc-9282-4fa8-83aa-61e7fda78b5f" />
+
+- ### Task Type Detail Page
+<img width="1919" height="595" alt="image" src="https://github.com/user-attachments/assets/6cb641d9-8d68-4d4b-bac7-57b9e6d375c2" />
+
+- ### Workers List Page
+<img width="1919" height="745" alt="image" src="https://github.com/user-attachments/assets/c3f094b1-a269-4192-a37c-a63462056c0d" />
+
+- ### Worker Detail Page
+<img width="1919" height="741" alt="image" src="https://github.com/user-attachments/assets/a89782b3-0b9e-4a4d-8b29-81c657534e99" />
+
+- ### Tags List Page
+<img width="1919" height="807" alt="image" src="https://github.com/user-attachments/assets/74b6640c-2230-4232-aa01-16a0077438cb" />
+
+- ### Create Project Page
+<img width="1919" height="737" alt="image" src="https://github.com/user-attachments/assets/bd13f17c-89e9-44df-97e1-50d4d68b23d5" />
+
+- ### Update Project Page
+<img width="1919" height="741" alt="image" src="https://github.com/user-attachments/assets/dd7bbd74-b4e8-4007-a571-0aae1205c755" />
+
+- ### Confirm Delete Project Page
+<img width="1919" height="648" alt="image" src="https://github.com/user-attachments/assets/e59c1dae-74e7-4bcc-8c20-5e1f5665b535" />
+
+- ### Logout Page
+<img width="1919" height="526" alt="image" src="https://github.com/user-attachments/assets/50f01c6d-7299-4196-a0d5-1b9632789c4c" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
