@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="card-title">{{ worker.first_name }} {{worker.last_name}}</h1>
+                    <h2><small class="text-muted">Email: {{ worker.email}}</small></h2>
+                    <h3><small class="text-muted">Position: {{worker.position}}</small></h3>
+                    <h3></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h3>Teams this Worker Belongs To</h3>
+    {% if worker.workers_name.all %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Team Code</th>
+                    <th>Number of Members</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in worker.workers_name.all %}
+                <tr class="text-center">
+                    <td><a href="{{ team.get_absolute_url }}" class="name">{{ team.team_code }}</a></td>
+                    <td>{{ team.workers.count }}</td>
+                    <td>
+                        <a href="{% url 'TaskManager:team-update' pk=team.id %}" class="btn btn-sm btn-info">Edit</a>
+                        <a href="{% url 'TaskManager:team-delete' pk=team.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="text-muted">This worker is not assigned to any teams.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

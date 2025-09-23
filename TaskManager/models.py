@@ -1,39 +1,38 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from back_end.settings import AUTH_USER_MODEL
+from django.urls import reverse
+from django.core.validators import MinValueValidator
+from django.utils import timezone
+
 
 
 class Position(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    description = models.CharField(max_length=255, default="0")
 
     def __str__(self):
         return f"{self.name}"
+    
+    def get_absolute_url(self):
+        return reverse("TaskManager:position-detail", args=[str(self.id)])
 
 
 class Worker(AbstractUser):
     position = models.ForeignKey(
         Position,
         on_delete=models.CASCADE,
-        related_name="position_name"
+        related_name="position_name",
+        null=True,
+        blank=True,
         )
 
-    groups = models.ManyToManyField(
-        Group,
-        related_name="taskmanager_workers",  # Unique related_name to avoid clashes
-        blank=True,
-        help_text="The groups this user belongs to.",
-        related_query_name="worker",
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        related_name="taskmanager_worker_permissions",  # Unique related_name to avoid clashes
-        blank=True,
-        help_text="Specific permissions for this user.",
-        related_query_name="worker",
-    )
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.position}"
+        return f"{self.first_name} {self.last_name}"
+    
+    def get_absolute_url(self):
+        return reverse("TaskManager:worker-detail", args=[str(self.id)])
 
 
 class TaskType(models.Model):
@@ -44,22 +43,42 @@ class TaskType(models.Model):
 
     def __str__(self):
         return f"{self.name}"
-    
+
+    def get_absolute_url(self):
+        return reverse("TaskManager:tasktype-detail", args=[str(self.id)])
+
+
+
+class Team(models.Model):
+    team_code = models.CharField(max_length=6, unique=True, null=True, blank=True)
+    workers = models.ManyToManyField(Worker,
+                                     related_name="workers_name")
+
+    def __str__(self):
+        return f"{self.team_code}"
+
+    def get_absolute_url(self):
+        return reverse("TaskManager:team-detail", args=[str(self.id)])
+
 
 class Project(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
-
-
-class Team(models.Model):
-    workers = models.ManyToManyField(Worker,
-                                     related_name="workers_name")
-    project = models.ForeignKey(Project,
-                                on_delete=models.CASCADE,
+    teams = models.ManyToManyField(Team,
                                 related_name="project_team")
 
     def __str__(self):
         return f"{self.name}"
+
+    def get_absolute_url(self):
+        return reverse("TaskManager:project-detail", args=[str(self.id)])
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name}"   
 
 
 class Task(models.Model):
@@ -71,7 +90,8 @@ class Task(models.Model):
     ]
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
-    deadline = models.DateTimeField()
+    deadline = models.DateTimeField(validators=[MinValueValidator(timezone.now(),
+                                                                  message="The deadline must be in the future!")],)
     is_completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=10,
                                 choices=PRIORITY_CHOICES,
@@ -85,10 +105,20 @@ class Task(models.Model):
                                 blank=True,
                                 null=True)
     assignees = models.ManyToManyField(AUTH_USER_MODEL, related_name="assignees_task")
+    tags = models.ManyToManyField(Tag, related_name="tasks", blank=True)
 
     class Meta:
-        ordering = ["priority"]
+        ordering = ["-priority"]
+
+    @property
+    def deadline_measure(self):
+        if self.deadline:
+            return self.deadline < timezone.now()
+        return False
 
     def __str__(self):
         return f"{self.name} - {self.priority}. {self.is_completed} : {self.assignees}"
+    
+    def get_absolute_url(self):
+        return reverse("TaskManager:task-detail", args=[str(self.id)])
 

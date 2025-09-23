@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+        <title>Task Manager</title>
+    {% endblock %}
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="topnav ">
+        <div class="menu-left">
+            <a class="topnav-button home" href="{% url 'task_manager:home' %}">Home</a>
+            <a class="topnav-button tasks" href="{% url 'task_manager:tasks-list' %}">Tasks</a>
+            <a class="topnav-button projects" href="{% url 'task_manager:projects-list' %}">Projects</a>
+            <a class="topnav-button positions" href="{% url 'task_manager:positions-list' %}">Positions</a>
+            <a class="topnav-button teams" href="{% url 'task_manager:teams-list' %}">Teams</a>
+            <a class="topnav-button tasktypes" href="{% url 'task_manager:tasktypes-list' %}">Task Types</a>
+            <a class="topnav-button workers" href="{% url 'task_manager:workers-list' %}">Workers</a>
+            <a class="topnav-button tags" href="{% url 'task_manager:tags-list' %}">Tags</a>
+        </div>
+        <div class="menu-right">
+            {% if user.is_authenticated %}
+                <a class="topnav-button logout" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a class="topnav-button login" href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
