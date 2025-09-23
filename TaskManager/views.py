@@ -231,7 +231,6 @@ class TasksListView(LoginRequiredMixin, generic.ListView):
     model = Task
     template_name = "TaskManager/tasks_list.html"
     context_object_name = "tasks_list"
-    paginate_by = 8
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -256,7 +255,6 @@ class TasksListView(LoginRequiredMixin, generic.ListView):
                     Q(tags__name__icontains=query)
                 ).distinct()
         return queryset
-
 
     def post(self, request, *args, **kwargs):
         task_id = request.POST.get("task_id")
