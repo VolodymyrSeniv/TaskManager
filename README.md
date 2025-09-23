@@ -74,5 +74,6 @@ python manage.py runserver
 - Pagination links preserve search queries and filters.
 
 ## *Database ER diagram*
-<img width="781" height="741" alt="Untitled Diagram drawio" src="https://github.com/user-attachments/assets/122b9fe0-0972-475c-8e0c-65a223616829" />
+<img width="781" height="741" alt="Untitled Diagram drawio" src="https://github.com/user-attachments/assets/f1dc2ee8-0cb6-4e24-9bd5-6eca16d1f7ef" />
+
 
