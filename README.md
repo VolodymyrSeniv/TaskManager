@@ -72,3 +72,6 @@ python manage.py runserver
 ### Responsive UI & Usability
 - Crispy Forms integration for clean and user-friendly forms.
 - Pagination links preserve search queries and filters.
+
+## *Database ER diagram*
+<img width="781" height="741" alt="Untitled Diagram drawio" src="https://github.com/user-attachments/assets/cddc9b3b-cd5b-4fa3-a6eb-faeee9b7c8e0" />
