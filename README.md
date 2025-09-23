@@ -76,4 +76,15 @@ python manage.py runserver
 ## *Database ER diagram*
 <img width="781" height="741" alt="Untitled Diagram drawio" src="https://github.com/user-attachments/assets/f1dc2ee8-0cb6-4e24-9bd5-6eca16d1f7ef" />
 
+## **Screenshots**
+###Index
+<img width="1919" height="705" alt="image" src="https://github.com/user-attachments/assets/3291af0e-0aab-4843-97b0-354edd975d2d" />
+
+###Login
+<img width="1919" height="780" alt="image" src="https://github.com/user-attachments/assets/c7a2a5fb-1e8d-48c1-9f2f-60c210d707cf" />
+
+### 
+
+
+
 
