@@ -1,3 +1,9 @@
+__pycache__/
+*.pyc
+db.sqlite3
+.env
+
+
 # Ignore Python cache
 __pycache__/
 *.pyc
