@@ -1,3 +1,14 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore Django databases
+db.sqlite3
+
+# Ignore environment
+.env
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
