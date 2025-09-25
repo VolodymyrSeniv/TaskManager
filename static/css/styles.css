@@ -1,0 +1,182 @@
+body {
+    background-color: #F8F5F2;
+}
+
+.topnav {
+    background-color: #6B4E71;
+    padding: 10px 10px;
+    display: flex;            /* make nav a flex container */
+    justify-content: space-between; /* spread left & right sections */
+    align-items: center;      /* vertical alignment */
+}
+
+
+.topnav-button {
+    color: #E07A5F;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 8px;   /* rounded corners */
+    transition: background-color 0.3s, color 0.3s; /* smooth hover effect */
+}
+
+.topnav-button:hover {
+    background-color: #F2CC8F; /* warm sand tone */
+    color: #3D2C3C; 
+}
+
+.main-text {
+    text-align: left;
+}
+
+.title-elements{
+    color: #2D2D2D;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.head-element{
+    padding-right: 20px;
+}
+
+.list-elements{
+    color: #2D2D2D;
+    font-size: 20px;
+    text-align: center;
+}
+
+.pos-table-body{
+    font-size: 20px;
+}
+
+.pos-table{
+    padding: 10px;
+}
+
+.menu-left a {
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+.menu-left {
+    display: flex;            /* keep left items in a row */
+    gap: 15px;                /* spacing instead of margin-right */
+}
+
+.menu-right {
+    display: flex;            /* keep right items in a row */
+    gap: 15px;
+}
+
+.menu-right a {
+    margin-left: 15px;
+    text-decoration: none;
+}
+
+.name {
+    text-decoration: none;
+    color: black;
+    border-radius: 7px;   /* rounded corners */
+    transition: background-color 0.3s, color 0.3s; /* smooth hover effect */
+    padding: 4px;
+}
+
+.name:hover {
+    background-color: #F2CC8F; /* warm sand tone */
+    color: #3D2C3C; 
+}
+
+
+.incompleted-tasks {
+    background-color: #fde2e4;   /* soft pastel pink */
+    border: 3px solid #f5b5b8;  /* muted rose */
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.completed-tasks {
+    background-color: #e2f7e1;   /* soft pastel green */
+    border: 3px solid #a9d6b4;  /* muted mint */
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.btn {
+  padding: 6px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-info {
+  background-color: #cce5ff;   /* soft blue */
+  color: #004085;
+  border: 1px solid #99ccff;
+}
+
+.btn-info:hover {
+  background-color: #b3d9ff;
+  transform: scale(1.05);
+}
+
+.btn-danger {
+  background-color: #f8d7da;  /* soft red */
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.btn-danger:hover {
+  background-color: #f1b0b7;
+  transform: scale(1.05);
+}
+
+.btn-primary {
+  background-color: #cce5ff;   /* soft blue */
+  color: #004085;
+  border: 1px solid #99ccff;
+}
+
+.btn-primary:hover {
+  background-color: #b3d9ff;
+  transform: scale(1.05);
+}
+
+.btn-success {
+  background-color: #d4edda;   /* soft green */
+  color: #155724;
+  border: 1px solid #a8d5a2;  /* muted green border */
+}
+
+.btn-success:hover {
+  background-color: #c3e6cb;   /* slightly darker green on hover */
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background-color: #e2e3e5; 
+  color: #383d41;           
+  border: 1px solid #c6c8ca;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-secondary:hover {
+  background-color: #d6d8db; 
+  transform: scale(1.05);
+}
+
+.id{
+    padding-left: 4px;
+}
+
+.deadline-passed {
+    color: red;
+}
+
+.table {
+  border-radius: 6px;
+}

@@ -112,10 +112,8 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-# Where collectstatic will put files (production)
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Extra places Django will look for static files (dev)
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]

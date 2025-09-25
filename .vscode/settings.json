@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "name": "taskmanager",
+            "connectString": "psql 'postgresql://neondb_owner:npg_Iq8NfBDGtm5x@ep-calm-field-ag3t9tc0.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'"
+        }
+    ]
+}
