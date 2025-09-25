@@ -1,5 +1,8 @@
 # **IT Company Task Manager**
-Task Management system for IT company made on Django Web Framework
+Task Management system for IT company made on Django Web Framework available at https://task-manager-seniv-volodymyr.onrender.com.
+Credentials for using:
+Username: qwerty
+Password: qwerty
 
 ## **Installing using GitHub**
 ```
