@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
-from back_end.settings import AUTH_USER_MODEL
+from back_end.settings.base import AUTH_USER_MODEL
 from django.urls import reverse
 from django.core.validators import MinValueValidator
 from django.utils import timezone
@@ -10,6 +10,9 @@ from django.utils import timezone
 class Position(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.CharField(max_length=255, default="0")
+
+    class Meta:
+        ordering = ["name"]
 
     def __str__(self):
         return f"{self.name}"
@@ -27,6 +30,8 @@ class Worker(AbstractUser):
         blank=True,
         )
 
+    class Meta:
+        ordering = ["first_name"]
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -53,6 +58,9 @@ class Team(models.Model):
     team_code = models.CharField(max_length=6, unique=True, null=True, blank=True)
     workers = models.ManyToManyField(Worker,
                                      related_name="workers_name")
+    
+    class Meta:
+        ordering = ["team_code"]
 
     def __str__(self):
         return f"{self.team_code}"
@@ -66,6 +74,9 @@ class Project(models.Model):
     description = models.TextField()
     teams = models.ManyToManyField(Team,
                                 related_name="project_team")
+     
+    class Meta:
+        ordering = ["name"]
 
     def __str__(self):
         return f"{self.name}"
@@ -76,6 +87,9 @@ class Project(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ["name"]
 
     def __str__(self):
         return f"{self.name}"   
@@ -121,4 +135,3 @@ class Task(models.Model):
     
     def get_absolute_url(self):
         return reverse("TaskManager:task-detail", args=[str(self.id)])
-
